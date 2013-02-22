@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
 import json
+
 import urllib2
 
 from app.models import AirPollution
@@ -40,8 +41,14 @@ def home(request):
             municipios = AirPollution.objects.filter(descripcion=particle).values('municipio')
 
             for element in json_response:
-                print element
-                if str(element['municipality']) in municipios.values():
+                print element['municipality']
+                #if str(element['municipality']) in municipios.values():
+                    #air_pollutions.append(element)
+                found = False
+                for mun in municipios.values():
+                    print "--->", mun['municipio']
+                    found = found or (mun['municipio'] == element['municipality'])
+                if found:
                     air_pollutions.append(element)
 
             print '------------------------------------'
