@@ -16,7 +16,7 @@ from app.forms import ParticleForm
 
 
 def home(request):
-    air_pollutions = []
+    points = []
     limit = '0'
     if request.method == 'POST':
         form = ParticleForm(request.POST)
@@ -28,13 +28,13 @@ def home(request):
             end_date = cd['end_date']
 
             if particle == 'SO2':
-                limit = '1'
+                limit = '125'
             if particle == 'NO2':
-                limit = '1'
+                limit = '200'
             if particle == 'PM10':
-                limit = '1'
+                limit = '50'
             if particle == 'CO':
-                limit = '1'
+                limit = '10'
 
             json_response = json.load(urllib2.urlopen('http://helheim.deusto.es/bizkaisense/api/outlimit_stations/' + particle + '/' + start_date + '/' + end_date + '/' + limit + ''))
 
@@ -43,26 +43,26 @@ def home(request):
             for element in json_response:
                 print element['municipality']
                 #if str(element['municipality']) in municipios.values():
-                    #air_pollutions.append(element)
+                    #points.append(element)
                 found = False
                 for mun in municipios.values():
                     print "--->", mun['municipio']
                     found = found or (mun['municipio'] == element['municipality'])
                 if found:
-                    air_pollutions.append(element)
+                    points.append(element)
 
             print '------------------------------------'
             print municipios
             print '------------------------------------'
-            print air_pollutions
+            print points
 
-            return HttpResponseRedirect(reverse('home'))
+            return render_to_response("app/index.html", {'points': points,}, context_instance=RequestContext(request))
 
     else:
         form = ParticleForm()
 
     return render_to_response("app/index.html", {
             'form': form,
-            'air_pollutions': air_pollutions,
+            'points': points,
         },
         context_instance=RequestContext(request))

@@ -17,13 +17,14 @@
 
             var my_items = []
 
-            {% for element in elements %}
+            {% for point in points %}
 
+                // window.alert({{ point.lat }});
                 var item = {};
-                item.start = element.start;
-                item.end = element.end;
-                item.point = {"lat": element.lat, "lon": element.lon};
-                item.title = element.name;
+                item.start = "{{ point.date }}"+"T00:00";
+                item.end = "{{ point.date }}"+"T23:59";
+                item.point = {"lat": {{ point.lat }}, "lon": {{ point.lng }}};
+                item.title = "{{ point.municipality }}";
 
                 my_items.push(item);
 
@@ -44,38 +45,7 @@
                             // note that the lines below are now the preferred syntax
                             type: "basic",
                             options: {
-                                items: [
-                                    // {
-                                    //     "start": "1449-01-01",
-                                    //     "end": "1449-01-11",
-                                    //     "point": {
-                                    //         "lat": 43.7717,
-                                    //         "lon": 11.2536
-                                    //     },
-                                    //     "title": "Domenico Ghirlandaio",
-                                    //     "options": {
-                                    //         // set the full HTML for the info window
-                                    //         "infoHtml": "<div class='custominfostyle'><b>Domenico Ghirlandaio</b> was a visual artist of some sort.</div>",
-                                    //     }
-                                    // },
-                                    // {
-                                    //   "start" : "1452",
-                                    //   "end" : "1519",
-                                    //   "point" : {
-                                    //       "lat" : 43.8166666667,
-                                    //       "lon" : 10.7666666667
-                                    //    },
-                                    //   "title" : "Leonardo da Vinci",
-                                    //   "options" : {
-                                    //     // load HTML from another file via AJAX
-                                    //     // Note that this may break in IE if you're running it with
-                                    //     // a local file, due to cross-site scripting restrictions
-                                    //     "infoUrl": "ajax_content.html",
-                                    //     "theme": "red"
-                                    //   }
-                                    // },
-
-                                ]
+                                items: my_items
                             }
                         }
                     ],
@@ -130,7 +100,6 @@
                 <input type="submit" value="Submit">
 
             </form>
-
 
             <div id="timemap">
                 <div id="timelinecontainer">
