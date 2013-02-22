@@ -1,0 +1,208 @@
+{% extends "contaminacion_euskadi/base.html" %}
+
+<!--Sidebar content-->
+{% block sidebar %}
+
+    <div id="benzene">
+        <svg style="height:75px">
+        </svg>
+    </div>
+
+    <div id="co">
+        <svg style="height:75px">
+        </svg>
+    </div>
+
+    <div id="ethylbenzene">
+        <svg style="height:75px">
+        </svg>
+    </div>
+
+    <div id="nh3">
+        <svg style="height:75px">
+        </svg>
+    </div>
+
+    <div id="nmhc">
+        <svg style="height:75px">
+        </svg>
+    </div>
+
+    <div id="no-no2">
+        <svg style="height:75px">
+        </svg>
+    </div>
+
+    <div id="pm10">
+        <svg style="height:75px">
+        </svg>
+    </div>
+
+    <div id="sh2">
+        <svg style="height:75px">
+        </svg>
+    </div>
+
+    <div id="toluene">
+        <svg style="height:75px">
+        </svg>
+    </div>
+
+    <div id="xylene">
+        <svg style="height:75px">
+        </svg>
+    </div>
+
+{% endblock %}
+
+<!-- Content block ↓ -->
+{% block content %}
+
+    <div id="timemap">
+        <div id="timelinecontainer">
+          <div id="timeline"></div>
+        </div>
+        <div id="mapcontainer">
+          <div id="map"></div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <script type="text/javascript">
+
+var tm;
+$(function() {
+    tm = TimeMap.init({
+        mapId: "map",               // Id of map div element (required)
+        timelineId: "timeline",     // Id of timeline div element (required)
+        options: {
+            eventIconPath: "../images/"
+        },
+        datasets: [
+            {
+                id: "artists",
+                title: "Artists",
+                theme: "orange",
+                // note that the lines below are now the preferred syntax
+                type: "basic",
+                options: {
+                    items: [
+                        {
+                          "start" : "1449",
+                          "end" : "1494-01-11",
+                          "point" : {
+                              "lat" : 43.7717,
+                              "lon" : 11.2536
+                           },
+                          "title" : "Domenico Ghirlandaio",
+                          "options" : {
+                            // set the full HTML for the info window
+                            "infoHtml": "<div class='custominfostyle'><b>Domenico Ghirlandaio</b> was a visual artist of some sort.</div>"
+                          }
+                        },
+                        {
+                          "start" : "1452",
+                          "end" : "1519",
+                          "point" : {
+                              "lat" : 43.8166666667,
+                              "lon" : 10.7666666667
+                           },
+                          "title" : "Leonardo da Vinci",
+                          "options" : {
+                            // load HTML from another file via AJAX
+                            // Note that this may break in IE if you're running it with
+                            // a local file, due to cross-site scripting restrictions
+                            "infoUrl": "ajax_content.html",
+                            "theme": "red"
+                          }
+                        },
+                        {
+                          "start" : "1475",
+                          "end" : "1564",
+                          "point" : {
+                              "lat" : 43.6433,
+                              "lon" : 11.9875
+                           },
+                          "title" : "Michelangelo",
+                          "options" : {
+                            // use the default title/description info window
+                            "description": "Renaissance Man",
+                            "theme": "yellow"
+                          }
+                        }
+                    ]
+                }
+            }
+        ],
+        bandIntervals: [
+            Timeline.DateTime.DECADE,
+            Timeline.DateTime.CENTURY
+        ]
+    });
+});
+    </script>
+
+    // <script>
+
+    //     nv.addGraph(function() {
+    //         var chart = nv.models.bulletChart();
+
+    //         d3.select('#benzene svg')
+    //         .datum({"title":"Benzene", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+    //         .transition().duration(1000)
+    //         .call(chart);
+
+    //         d3.select('#co svg')
+    //         .datum({"title":"CO", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+    //         .transition().duration(1000)
+    //         .call(chart);
+
+    //         d3.select('#ethylbenzene svg')
+    //         .datum({"title":"Ethylbenzene", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+    //         .transition().duration(1000)
+    //         .call(chart);
+
+    //         d3.select('#nh3 svg')
+    //         .datum({"title":"NH3", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+    //         .transition().duration(1000)
+    //         .call(chart);
+
+    //         d3.select('#nmhc svg')
+    //         .datum({"title":"NMHC", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+    //         .transition().duration(1000)
+    //         .call(chart);
+
+    //         d3.select('#no-no2 svg')
+    //         .datum({"title":"NO / NO2", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+    //         .transition().duration(1000)
+    //         .call(chart);
+
+    //         d3.select('#pm10 svg')
+    //         .datum({"title":"PM10", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+    //         .transition().duration(1000)
+    //         .call(chart);
+
+    //         d3.select('#sh2 svg')
+    //         .datum({"title":"sh2", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+    //         .transition().duration(1000)
+    //         .call(chart);
+
+    //         d3.select('#toluene svg')
+    //         .datum({"title":"Toluene", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+    //         .transition().duration(1000)
+    //         .call(chart);
+
+    //         d3.select('#xylene svg')
+    //         .datum({"title":"Xylene", "ranges":[150,225,300], "measures":[120], "markers":[250]})
+    //         .transition().duration(1000)
+    //         .call(chart);
+
+    //         return chart;
+    //     });
+
+    // </script>
+
+{% endblock %}

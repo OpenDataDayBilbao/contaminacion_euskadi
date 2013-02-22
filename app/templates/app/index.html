@@ -1,0 +1,120 @@
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+{% get_media_prefix as MEDIA_PREFIX %}
+
+<!DOCTYPE html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <title>Basic Example</title>
+        <script src="http://openlayers.org/api/OpenLayers.js"></script>
+        <script src="{{ STATIC_PREFIX }}lib/jquery-1.6.2.min.js"></script>
+        <script src="{{ STATIC_PREFIX }}lib/mxn/mxn.js?(openlayers)"></script>
+        <script src="{{ STATIC_PREFIX }}lib/timeline-1.2.js"></script>
+        <script src="{{ STATIC_PREFIX }}src/timemap.js"></script>
+
+        <script>
+            var tm;
+
+            $(function() {
+                tm = TimeMap.init({
+                    mapId: "map",               // Id of map div element (required)
+                    timelineId: "timeline",     // Id of timeline div element (required)
+                    options: {
+                        eventIconPath: "../../images/",
+                    },
+                    datasets: [
+                        {
+                            id: "artists",
+                            title: "Artists",
+                            theme: "orange",
+                            // note that the lines below are now the preferred syntax
+                            type: "basic",
+                            options: {
+                                items: [
+                                    {
+                                        "start": "1449-01-01",
+                                        "end": "1449-01-11",
+                                        "point": {
+                                            "lat": 43.7717,
+                                            "lon": 11.2536
+                                        },
+                                        "title": "Domenico Ghirlandaio",
+                                        "options": {
+                                            // set the full HTML for the info window
+                                            "infoHtml": "<div class='custominfostyle'><b>Domenico Ghirlandaio</b> was a visual artist of some sort.</div>",
+                                        }
+                                    },
+                                    {
+                                      "start" : "1452",
+                                      "end" : "1519",
+                                      "point" : {
+                                          "lat" : 43.8166666667,
+                                          "lon" : 10.7666666667
+                                       },
+                                      "title" : "Leonardo da Vinci",
+                                      "options" : {
+                                        // load HTML from another file via AJAX
+                                        // Note that this may break in IE if you're running it with
+                                        // a local file, due to cross-site scripting restrictions
+                                        "infoUrl": "ajax_content.html",
+                                        "theme": "red"
+                                      }
+                                    },
+                                ]
+                            }
+                        }
+                    ],
+                    bandIntervals: [
+                        // Timeline.DateTime.DECADE,
+                        // Timeline.DateTime.CENTURY
+                        Timeline.DateTime.DAY,
+                        Timeline.DateTime.MONTH
+                    ]
+                });
+
+                tm.eachItem(function(item) {
+                    var marker = item.getNativePlacemark();
+                    marker.events.register('click', marker, function() {
+                        // for (var key in item) {
+                        //     if (item.hasOwnProperty(key)) {
+                        //         window.alert(key + " - " + item[key]);
+                        //     }
+                        // }
+                        window.alert(item.getTitle());
+                    });
+                });
+            });
+        </script>
+
+        <link rel="stylesheet" href="{{ STATIC_PREFIX }}css/examples.css"/>
+
+        <style>
+            div#timelinecontainer { height: 250px; }
+            div#mapcontainer { height: 600px; }
+            div.olFramedCloudPopupContent { width: 300px; }
+        </style>
+    </head>
+
+    <body>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+
+        </div>
+
+        <!-- Main content -->
+        <div class="main-content">
+
+            <div id="timemap">
+                <div id="timelinecontainer">
+                    <div id="timeline"></div>
+                </div>
+                <div id="mapcontainer">
+                    <div id="map"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </body>
+</html>
