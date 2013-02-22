@@ -18,5 +18,5 @@ class AirPollution(models.Model):
     municipio = models.CharField(max_length=100)
     contaminante = models.IntegerField()
     descripcion = models.CharField(max_length=100)
-    cod_prtr = models.IntegerField()
+    cod_prtr = models.IntegerField(null=True)
     cantidad_kg_aino = models.FloatField()
