@@ -56,7 +56,11 @@ def home(request):
             print '------------------------------------'
             print points
 
-            return render_to_response("app/index.html", {'points': points,}, context_instance=RequestContext(request))
+            return render_to_response("app/index.html", {
+                    'form': form,
+                    'points': points,
+                },
+                context_instance=RequestContext(request))
 
     else:
         form = ParticleForm()

@@ -4,13 +4,34 @@
 
 <!DOCTYPE html>
     <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-        <title>Basic Example</title>
+        <title>Contaminación en Euskadi</title>
+        <link rel="shortcut icon" href="{{ STATIC_PREFIX }}img/favicon.ico">
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="{{ STATIC_PREFIX }}css/bootstrap.css"/>
+        <link rel="stylesheet" href="{{ STATIC_PREFIX }}css/bootstrap-responsive.css"/>
+        <link rel="stylesheet" href="{{ STATIC_PREFIX }}css/style.css"/>
+
         <script src="http://openlayers.org/api/OpenLayers.js"></script>
-        <script src="{{ STATIC_PREFIX }}lib/jquery-1.6.2.min.js"></script>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
         <script src="{{ STATIC_PREFIX }}lib/mxn/mxn.js?(openlayers)"></script>
         <script src="{{ STATIC_PREFIX }}lib/timeline-1.2.js"></script>
         <script src="{{ STATIC_PREFIX }}src/timemap.js"></script>
+
+        <script src="{{ STATIC_PREFIX }}js/bootstrap.js"></script>
+
+        <script src="{{ STATIC_PREFIX }}js/d3.v2.js"></script>
+        <script src="{{ STATIC_PREFIX }}js/fisheye.js"></script>
+        <script src="{{ STATIC_PREFIX }}js/nv.d3.js"></script>
 
         <script>
             var tm;
@@ -71,10 +92,68 @@
             });
         </script>
 
+        <script>
+            nv.addGraph(function() {
+                var chart = nv.models.bulletChart();
+
+                d3.select('#benzene svg')
+                .datum({"title":"Benzene", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+                .transition().duration(1000)
+                .call(chart);
+
+                d3.select('#co svg')
+                .datum({"title":"CO", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+                .transition().duration(1000)
+                .call(chart);
+
+                d3.select('#ethylbenzene svg')
+                .datum({"title":"Ethylbenzene", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+                .transition().duration(1000)
+                .call(chart);
+
+                d3.select('#nh3 svg')
+                .datum({"title":"NH3", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+                .transition().duration(1000)
+                .call(chart);
+
+                d3.select('#nmhc svg')
+                .datum({"title":"NMHC", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+                .transition().duration(1000)
+                .call(chart);
+
+                d3.select('#no-no2 svg')
+                .datum({"title":"NO / NO2", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+                .transition().duration(1000)
+                .call(chart);
+
+                d3.select('#pm10 svg')
+                .datum({"title":"PM10", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+                .transition().duration(1000)
+                .call(chart);
+
+                d3.select('#sh2 svg')
+                .datum({"title":"sh2", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+                .transition().duration(1000)
+                .call(chart);
+
+                d3.select('#toluene svg')
+                .datum({"title":"Toluene", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+                .transition().duration(1000)
+                .call(chart);
+
+                d3.select('#xylene svg')
+                .datum({"title":"Xylene", "ranges":[150,225,300], "measures":[120], "markers":[250]})
+                .transition().duration(1000)
+                .call(chart);
+
+                return chart;
+            });
+        </script>
+
         <link rel="stylesheet" href="{{ STATIC_PREFIX }}css/examples.css"/>
 
         <style>
-            div#timelinecontainer { height: 250px; }
+            div#timelinecontainer { height: 200px; }
             div#mapcontainer { height: 600px; }
             div.olFramedCloudPopupContent { width: 300px; }
         </style>
@@ -82,14 +161,7 @@
 
     <body>
 
-        <!-- Sidebar -->
-        <div class="sidebar">
-
-        </div>
-
-        <!-- Main content -->
-        <div class="main-content">
-
+        <header>
             <form action="" method="POST">
                 {% csrf_token %}
 
@@ -97,20 +169,91 @@
                     {{ field.label }} {{ field }}
                 {% endfor %}
 
-                <input type="submit" value="Submit">
+                <input class="btn btn-primary" type="submit" value="Submit">
 
             </form>
+        </header>
 
-            <div id="timemap">
-                <div id="timelinecontainer">
-                    <div id="timeline"></div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+
+                <!-- Sidebar -->
+                <div class="sidebar span4">
+                    <div id="benzene">
+                        <svg style="height:75px">
+                        </svg>
+                    </div>
+
+                    <div id="co">
+                        <svg style="height:75px">
+                        </svg>
+                    </div>
+
+                    <div id="ethylbenzene">
+                        <svg style="height:75px">
+                        </svg>
+                    </div>
+
+                    <div id="nh3">
+                        <svg style="height:75px">
+                        </svg>
+                    </div>
+
+                    <div id="nmhc">
+                        <svg style="height:75px">
+                        </svg>
+                    </div>
+
+                    <div id="no-no2">
+                        <svg style="height:75px">
+                        </svg>
+                    </div>
+
+                    <div id="pm10">
+                        <svg style="height:75px">
+                        </svg>
+                    </div>
+
+                    <div id="sh2">
+                        <svg style="height:75px">
+                        </svg>
+                    </div>
+
+                    <div id="toluene">
+                        <svg style="height:75px">
+                        </svg>
+                    </div>
+
+                    <div id="xylene">
+                        <svg style="height:75px">
+                        </svg>
+                    </div>
                 </div>
-                <div id="mapcontainer">
-                    <div id="map"></div>
+
+                <!-- Main content -->
+                <div class="main-content span8">
+                    <div id="timemap">
+                        <div id="timelinecontainer">
+                            <div id="timeline"></div>
+                        </div>
+                        <div id="mapcontainer">
+                            <div id="map"></div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
-
         </div>
+
+        <script>
+            $(document).ready(function() {
+                $( ".nv-tick" ).each(function( index ) {
+                    // $(this).css({ opacity: 1; color: blue });
+                    this.style.opacity = 1;
+                    this.style.color = blue;
+                });
+            });
+        </script>
 
     </body>
 </html>
