@@ -80,12 +80,7 @@
                 tm.eachItem(function(item) {
                     var marker = item.getNativePlacemark();
                     marker.events.register('click', marker, function() {
-                        // for (var key in item) {
-                        //     if (item.hasOwnProperty(key)) {
-                        //         window.alert(key + " - " + item[key]);
-                        //     }
-                        // }
-                        window.alert(item.getTitle());
+                        window.alert(item.getTitle() + " - " + item.getStart());
                     });
                 });
             });
@@ -131,7 +126,7 @@
                 .call(chart);
 
                 d3.select('#sh2 svg')
-                .datum({"title":"sh2", "ranges":[150,225,300], "measures":[220], "markers":[250]})
+                .datum({"title":"SH2", "ranges":[150,225,300], "measures":[220], "markers":[250]})
                 .transition().duration(1000)
                 .call(chart);
 
